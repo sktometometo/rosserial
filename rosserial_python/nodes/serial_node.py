@@ -95,9 +95,11 @@ if __name__=="__main__":
             except OSError:
                 sleep(1.0)
                 continue
-            except:
+            except Exception as e:
+                rospy.logerr('Error: {}'.format(e))
                 rospy.logwarn("Unexpected Error.%s", sys.exc_info()[0])
-                client.port.close()
+                if 'client' in locals():
+                    client.port.close()
                 sleep(1.0)
                 continue
 
